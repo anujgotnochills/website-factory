@@ -88,7 +88,7 @@ export default function Navbar() {
                             zIndex: 1001,
                         }}
                     >
-                        {config.studioName.toUpperCase()}<span style={{ color: 'var(--text-primary)', fontWeight: 400 }}>STUDIO</span>
+                        {config.studioName.toUpperCase()}
                     </a>
 
                     {/* Desktop Links */}

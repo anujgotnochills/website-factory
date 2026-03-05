@@ -76,7 +76,7 @@ export default function Portfolio() {
                 </div>
 
                 {/* Interactive Image Trail Area */}
-                <div style={{
+                <div className="image-trail-container" style={{
                     height: '500px',
                     position: 'relative',
                     overflow: 'hidden',

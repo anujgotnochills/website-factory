@@ -213,7 +213,7 @@ export default function Contact() {
 
                 {/* Contact Info below the form */}
                 <div className="contact-reveal" style={{ marginTop: '48px' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '32px' }}>
+                    <div className="contact-info-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '32px' }}>
                         {CONTACT_INFO.map((info) => (
                             <div
                                 key={info.label}
@@ -238,7 +238,7 @@ export default function Contact() {
                     </div>
 
                     {/* Social Links */}
-                    <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                    <div className="social-links" style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
                         {Object.entries({ Instagram: config.instagram, YouTube: config.youtube, Facebook: config.facebook }).map(([platform, url]) => (
                             <a
                                 key={platform}

@@ -96,7 +96,7 @@ export default function Testimonials() {
                 >
                     {TESTIMONIALS.map((t) => (
                         <ScrollStackItem key={t.id}>
-                            <div style={{
+                            <div className="testimonial-card" style={{
                                 background: 'var(--bg-card)',
                                 border: '1px solid var(--border-color)',
                                 borderRadius: '40px',

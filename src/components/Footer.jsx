@@ -21,7 +21,7 @@ export default function Footer() {
             paddingBottom: '32px',
         }}>
             <div className="container">
-                <div style={{
+                <div className="footer-grid" style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
                     gap: '48px',
@@ -49,7 +49,7 @@ export default function Footer() {
                         }}>
                             Crafting visual stories that elevate brands and capture life's most precious moments.
                         </p>
-                        <div style={{ display: 'flex', gap: '12px' }}>
+                        <div className="social-links" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                             {Object.entries({ Instagram: config.instagram, YouTube: config.youtube, Facebook: config.facebook }).map(([platform, url]) => (
                                 <a
                                     key={platform}

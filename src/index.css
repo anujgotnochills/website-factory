@@ -71,7 +71,12 @@ body::after {
 }
 
 /* ========== TYPOGRAPHY ========== */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 500;
   line-height: 1.15;
@@ -213,4 +218,167 @@ img {
 .reveal-scale {
   opacity: 0;
   transform: scale(0.95);
+}
+
+/* ========== MOBILE RESPONSIVENESS ========== */
+
+/* ---- Tablet (max-width: 768px) ---- */
+@media (max-width: 768px) {
+
+  /* Section spacing */
+  .section-padding {
+    padding: 72px 0;
+  }
+
+  .section-padding-sm {
+    padding: 48px 0;
+  }
+
+  /* Buttons — smaller on mobile */
+  .btn-primary {
+    padding: 14px 28px;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+
+  .btn-outline {
+    padding: 12px 24px;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* Footer grid — stack on mobile */
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+
+  /* Contact info grid — 2 columns on tablet */
+  .contact-info-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Image trail container — shorter on mobile */
+  .image-trail-container {
+    height: 300px !important;
+  }
+
+  /* Portfolio grid — 2 columns on tablet */
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-auto-rows: 240px !important;
+  }
+
+  .portfolio-item {
+    grid-row: span 1 !important;
+  }
+
+  /* Testimonial cards — tighter padding */
+  .testimonial-card {
+    padding: 32px 24px !important;
+    border-radius: 24px !important;
+  }
+
+  /* About stats grid */
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  /* Form grid — stack inputs */
+  .form-name-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Hero content adjustments */
+  .hero-content {
+    padding: 0 8px !important;
+  }
+}
+
+/* ---- Phone (max-width: 480px) ---- */
+@media (max-width: 480px) {
+
+  /* Even tighter section spacing */
+  .section-padding {
+    padding: 56px 0;
+  }
+
+  .section-padding-sm {
+    padding: 36px 0;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  /* Buttons — full width on small phones */
+  .btn-primary,
+  .btn-outline {
+    padding: 14px 20px;
+    font-size: 0.75rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Section labels — smaller */
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+  }
+
+  /* Contact info grid — single column */
+  .contact-info-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Image trail — even shorter */
+  .image-trail-container {
+    height: 220px !important;
+  }
+
+  /* Portfolio — single column */
+  .portfolio-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: 220px !important;
+  }
+
+  /* Testimonial cards — tighter padding */
+  .testimonial-card {
+    padding: 24px 20px !important;
+    border-radius: 20px !important;
+  }
+
+  /* Social links wrap */
+  .social-links {
+    gap: 8px !important;
+  }
+
+  .social-links a {
+    padding: 10px 14px !important;
+    font-size: 0.65rem !important;
+  }
+
+  /* Process steps grid */
+  .process-grid {
+    grid-template-columns: 1fr !important;
+    gap: 36px !important;
+  }
+
+  /* Footer — tighter spacing */
+  .footer-grid {
+    gap: 28px !important;
+  }
+
+  /* Contact glow card — less padding */
+  .glow-card {
+    padding: 28px 20px !important;
+  }
+
+  /* Hero CTA buttons — stack vertically */
+  .hero-cta {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
 }

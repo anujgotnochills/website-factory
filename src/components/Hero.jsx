@@ -209,7 +209,7 @@ export default function Hero() {
                     width: '100%',
                     opacity: 0,
                 }}>
-                    <div style={{ maxWidth: '800px' }}>
+                    <div className="hero-content" style={{ maxWidth: '800px' }}>
                         <div ref={headingRef}>
                             <p style={{
                                 fontFamily: 'var(--font-body)',
@@ -249,7 +249,7 @@ export default function Hero() {
                             Maternity shoots that capture the glow. Product videos that convert.
                             E-commerce photography that elevates your brand.
                         </p>
-                        <div ref={ctaRef} style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                        <div ref={ctaRef} className="hero-cta" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
                             <a
                                 href={`https://wa.me/${config.whatsappNumber}?text=Hi%20${encodeURIComponent(config.studioName)},%20I%20would%20like%20to%20book%20a%20shoot!`}
                                 target="_blank"
