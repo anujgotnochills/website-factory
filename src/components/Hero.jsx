@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useClientConfig } from '../ClientConfigContext'
@@ -12,6 +12,187 @@ function getFrameUrl(index) {
     return `/animation/ezgif-frame-${num}.jpg`
 }
 
+/* ─── Floating Bokeh Particles ─── */
+function BokehParticles() {
+    const containerRef = useRef(null)
+
+    useEffect(() => {
+        if (!containerRef.current) return
+        const particles = containerRef.current.querySelectorAll('.bokeh-dot')
+
+        particles.forEach((particle, i) => {
+            // Random starting position
+            gsap.set(particle, {
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+            })
+
+            // Continuous float animation
+            gsap.to(particle, {
+                y: `-=${60 + Math.random() * 80}`,
+                x: `+=${(Math.random() - 0.5) * 100}`,
+                opacity: Math.random() * 0.6 + 0.1,
+                duration: 4 + Math.random() * 4,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut',
+                delay: Math.random() * 3,
+            })
+
+            // Pulse size
+            gsap.to(particle, {
+                scale: 0.5 + Math.random() * 1.2,
+                duration: 3 + Math.random() * 3,
+                repeat: -1,
+                yoyo: true,
+                ease: 'sine.inOut',
+                delay: Math.random() * 2,
+            })
+        })
+    }, [])
+
+    const dots = useMemo(() => Array.from({ length: 18 }), [])
+
+    return (
+        <div ref={containerRef} style={{
+            position: 'absolute',
+            inset: 0,
+            overflow: 'hidden',
+            zIndex: 1,
+            pointerEvents: 'none',
+        }}>
+            {dots.map((_, i) => (
+                <div
+                    key={i}
+                    className="bokeh-dot"
+                    style={{
+                        position: 'absolute',
+                        width: `${6 + Math.random() * 14}px`,
+                        height: `${6 + Math.random() * 14}px`,
+                        borderRadius: '50%',
+                        background: i % 3 === 0
+                            ? 'radial-gradient(circle, rgba(201,169,110,0.6) 0%, rgba(201,169,110,0) 70%)'
+                            : i % 3 === 1
+                                ? 'radial-gradient(circle, rgba(232,213,176,0.4) 0%, rgba(232,213,176,0) 70%)'
+                                : 'radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 70%)',
+                        opacity: 0,
+                        filter: `blur(${1 + Math.random() * 2}px)`,
+                    }}
+                />
+            ))}
+        </div>
+    )
+}
+
+/* ─── Camera Aperture Reveal ─── */
+function ApertureReveal() {
+    const apertureRef = useRef(null)
+
+    useEffect(() => {
+        if (!apertureRef.current) return
+        const blades = apertureRef.current.querySelectorAll('.aperture-blade')
+
+        // Aperture opens from closed to open
+        gsap.fromTo(blades,
+            { rotation: 0, scale: 1 },
+            {
+                rotation: (i) => 60 + i * 5,
+                scale: 1.8,
+                opacity: 0,
+                duration: 1.8,
+                stagger: 0.05,
+                ease: 'power3.inOut',
+                delay: 0.2,
+            }
+        )
+
+        // Fade the whole aperture container
+        gsap.to(apertureRef.current, {
+            opacity: 0,
+            duration: 0.6,
+            delay: 1.6,
+            ease: 'power2.out',
+        })
+    }, [])
+
+    const bladeCount = 8
+    const blades = useMemo(() => Array.from({ length: bladeCount }), [])
+
+    return (
+        <div ref={apertureRef} style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 4,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'var(--bg-primary)',
+            overflow: 'hidden',
+        }}>
+            {/* Aperture blades */}
+            {blades.map((_, i) => (
+                <div
+                    key={i}
+                    className="aperture-blade"
+                    style={{
+                        position: 'absolute',
+                        width: '120%',
+                        height: '120%',
+                        background: i % 2 === 0
+                            ? 'linear-gradient(135deg, #0d0d14 0%, #14141f 100%)'
+                            : 'linear-gradient(135deg, #11111a 0%, #0a0a12 100%)',
+                        transformOrigin: 'center center',
+                        transform: `rotate(${(360 / bladeCount) * i}deg)`,
+                        clipPath: 'polygon(50% 50%, 30% 0%, 70% 0%)',
+                    }}
+                />
+            ))}
+
+            {/* Center ring glow */}
+            <div style={{
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                border: '2px solid var(--gold)',
+                opacity: 0.6,
+                animation: 'aperture-pulse 1.2s ease-in-out',
+                position: 'relative',
+                zIndex: 5,
+            }}>
+                {/* Inner dot */}
+                <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: 'var(--gold)',
+                }} />
+            </div>
+        </div>
+    )
+}
+
+/* ─── Animated Gradient Background (mobile) ─── */
+function StudioGradient() {
+    return (
+        <div style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 0,
+            background: 'var(--bg-primary)',
+            overflow: 'hidden',
+        }}>
+            {/* Animated gradient orbs */}
+            <div className="gradient-orb gradient-orb-1" />
+            <div className="gradient-orb gradient-orb-2" />
+            <div className="gradient-orb gradient-orb-3" />
+        </div>
+    )
+}
+
 export default function Hero() {
     const config = useClientConfig()
     const sectionRef = useRef(null)
@@ -23,9 +204,18 @@ export default function Hero() {
     const scrollRef = useRef(null)
     const imagesRef = useRef([])
     const [loaded, setLoaded] = useState(false)
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
 
-    // Preload all frames
+    // Track mobile vs desktop
     useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth <= 768)
+        window.addEventListener('resize', check)
+        return () => window.removeEventListener('resize', check)
+    }, [])
+
+    // Preload frames (desktop only)
+    useEffect(() => {
+        if (isMobile) return
         const images = []
         let loadedCount = 0
 
@@ -39,11 +229,11 @@ export default function Hero() {
             images.push(img)
         }
         imagesRef.current = images
-    }, [])
+    }, [isMobile])
 
-    // Canvas rendering + scroll-based animation
+    // Canvas rendering + scroll-based animation (desktop only)
     useEffect(() => {
-        if (!loaded || !canvasRef.current) return
+        if (isMobile || !loaded || !canvasRef.current) return
 
         const canvas = canvasRef.current
         const ctx = canvas.getContext('2d')
@@ -54,7 +244,6 @@ export default function Hero() {
             if (!img || !ctx) return
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-            // Cover-fit
             const canvasRatio = canvas.width / canvas.height
             const imgRatio = img.width / img.height
             let drawW, drawH, drawX, drawY
@@ -78,14 +267,12 @@ export default function Hero() {
             drawFrame(animObj.frame)
         }
 
-        // Draw first frame immediately
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight
         drawFrame(0)
 
         window.addEventListener('resize', resize)
 
-        // Scroll-driven frame animation
         const animObj = { frame: 0 }
         gsap.to(animObj, {
             frame: FRAME_COUNT - 1,
@@ -96,7 +283,6 @@ export default function Hero() {
                 start: 'top top',
                 end: 'bottom bottom',
                 scrub: 0.5,
-                // no pin here — the section itself provides the scroll height
             },
             onUpdate: () => drawFrame(Math.round(animObj.frame)),
         })
@@ -107,46 +293,35 @@ export default function Hero() {
                 if (t.trigger === sectionRef.current) t.kill()
             })
         }
-    }, [loaded])
+    }, [loaded, isMobile])
 
-    // Text reveal — scroll-triggered when animation nears completion
+    // Text reveal — always plays immediately
     useEffect(() => {
-        if (!loaded || !contentRef.current) return
+        if (!contentRef.current) return
         const ctx = gsap.context(() => {
-            // Hide everything initially
-            gsap.set(contentRef.current, { opacity: 0 })
-            gsap.set(scrollRef.current, { opacity: 0 })
-
-            // Reveal content when scroll reaches ~75% of hero section
             const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: '35% center',
-                    end: '50% center',
-                    scrub: false,
-                    toggleActions: 'play none none reverse',
-                },
+                delay: isMobile ? 1.2 : 0.3, // longer delay on mobile for aperture reveal
                 defaults: { ease: 'power3.out' },
             })
-            tl.to(contentRef.current, { opacity: 1, duration: 0.6 })
-                .fromTo(headingRef.current.children, { y: 60, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.12, duration: 1 }, 0)
+            tl.to(contentRef.current, { opacity: 1, duration: 0.8 })
+                .fromTo(headingRef.current.children, { y: 60, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.15, duration: 1.2 }, 0)
                 .fromTo(subRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.5')
                 .fromTo(ctaRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, '-=0.3')
                 .fromTo(scrollRef.current, { opacity: 0 }, { opacity: 1, duration: 0.6 }, '-=0.1')
 
-            gsap.to(scrollRef.current, { y: 8, repeat: -1, yoyo: true, duration: 1.5, ease: 'sine.inOut' })
+            gsap.to(scrollRef.current, { y: 8, repeat: -1, yoyo: true, duration: 1.5, ease: 'sine.inOut', delay: isMobile ? 3 : 1.5 })
         }, sectionRef)
         return () => ctx.revert()
-    }, [loaded])
+    }, [isMobile])
 
     return (
         <section id="home" ref={sectionRef} style={{
             position: 'relative',
-            height: '300vh', /* Extra height for scroll-based animation */
+            height: isMobile ? '100vh' : '300vh',
         }}>
-            {/* Sticky viewport that pins while scrolling */}
+            {/* Sticky viewport */}
             <div style={{
-                position: 'sticky',
+                position: isMobile ? 'relative' : 'sticky',
                 top: 0,
                 height: '100vh',
                 width: '100%',
@@ -154,28 +329,41 @@ export default function Hero() {
                 display: 'flex',
                 alignItems: 'center',
             }}>
-                {/* Canvas Background */}
-                <canvas
-                    ref={canvasRef}
-                    style={{
-                        position: 'absolute',
-                        inset: 0,
-                        width: '100%',
-                        height: '100%',
-                        zIndex: 0,
-                    }}
-                />
+                {/* === MOBILE: Aperture + Bokeh + Gradient === */}
+                {isMobile && (
+                    <>
+                        <StudioGradient />
+                        <BokehParticles />
+                        <ApertureReveal />
+                    </>
+                )}
+
+                {/* === DESKTOP: Canvas Background === */}
+                {!isMobile && (
+                    <canvas
+                        ref={canvasRef}
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            width: '100%',
+                            height: '100%',
+                            zIndex: 0,
+                        }}
+                    />
+                )}
 
                 {/* Dark overlay */}
                 <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to bottom, rgba(10,10,15,0.3) 0%, rgba(10,10,15,0.5) 50%, rgba(10,10,15,0.9) 100%)',
+                    background: isMobile
+                        ? 'linear-gradient(to bottom, rgba(10,10,15,0.1) 0%, rgba(10,10,15,0.4) 50%, rgba(10,10,15,0.85) 100%)'
+                        : 'linear-gradient(to bottom, rgba(10,10,15,0.3) 0%, rgba(10,10,15,0.5) 50%, rgba(10,10,15,0.9) 100%)',
                     zIndex: 1,
                 }} />
 
-                {/* Loading indicator */}
-                {!loaded && (
+                {/* Loading indicator (desktop only) */}
+                {!isMobile && !loaded && (
                     <div style={{
                         position: 'absolute',
                         inset: 0,
@@ -193,11 +381,10 @@ export default function Hero() {
                             borderRadius: '50%',
                             animation: 'spin 0.8s linear infinite',
                         }} />
-                        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
                     </div>
                 )}
 
-                {/* Content — centered, hidden until animation completes */}
+                {/* Content */}
                 <div ref={contentRef} className="container" style={{
                     position: 'relative',
                     zIndex: 2,
@@ -294,6 +481,61 @@ export default function Hero() {
                     }} />
                 </div>
             </div>
+
+            {/* Keyframe animations for mobile */}
+            <style>{`
+                @keyframes spin { to { transform: rotate(360deg); } }
+                @keyframes aperture-pulse {
+                    0% { transform: scale(0.3); opacity: 0; }
+                    50% { transform: scale(1); opacity: 0.8; }
+                    100% { transform: scale(1.3); opacity: 0; }
+                }
+
+                .gradient-orb {
+                    position: absolute;
+                    border-radius: 50%;
+                    filter: blur(80px);
+                    opacity: 0.35;
+                }
+                .gradient-orb-1 {
+                    width: 300px;
+                    height: 300px;
+                    background: radial-gradient(circle, rgba(201,169,110,0.4) 0%, transparent 70%);
+                    top: 10%;
+                    right: -10%;
+                    animation: orb-float-1 8s ease-in-out infinite;
+                }
+                .gradient-orb-2 {
+                    width: 250px;
+                    height: 250px;
+                    background: radial-gradient(circle, rgba(168,138,78,0.3) 0%, transparent 70%);
+                    bottom: 20%;
+                    left: -15%;
+                    animation: orb-float-2 10s ease-in-out infinite;
+                }
+                .gradient-orb-3 {
+                    width: 200px;
+                    height: 200px;
+                    background: radial-gradient(circle, rgba(232,213,176,0.2) 0%, transparent 70%);
+                    top: 50%;
+                    left: 40%;
+                    animation: orb-float-3 12s ease-in-out infinite;
+                }
+                @keyframes orb-float-1 {
+                    0%, 100% { transform: translate(0, 0) scale(1); }
+                    33% { transform: translate(-30px, 40px) scale(1.1); }
+                    66% { transform: translate(20px, -20px) scale(0.9); }
+                }
+                @keyframes orb-float-2 {
+                    0%, 100% { transform: translate(0, 0) scale(1); }
+                    33% { transform: translate(40px, -30px) scale(1.15); }
+                    66% { transform: translate(-20px, 20px) scale(0.85); }
+                }
+                @keyframes orb-float-3 {
+                    0%, 100% { transform: translate(0, 0) scale(1); }
+                    50% { transform: translate(-40px, -40px) scale(1.2); }
+                }
+            `}</style>
         </section>
     )
 }

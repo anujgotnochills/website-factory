@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useCallback, useState } from 'react'
+import React, { useLayoutEffect, useRef, useCallback, useEffect } from 'react'
 
 export const ScrollStackItem = ({ children, itemClassName = '' }) => (
     <div
@@ -6,15 +6,10 @@ export const ScrollStackItem = ({ children, itemClassName = '' }) => (
         style={{
             position: 'relative',
             width: '100%',
-            minHeight: '320px',
-            margin: '32px 0',
-            padding: '48px',
-            borderRadius: '40px',
-            boxShadow: '0 0 30px rgba(0,0,0,0.1)',
+            minHeight: '280px',
+            padding: '0',
             boxSizing: 'border-box',
             transformOrigin: 'top center',
-            willChange: 'transform',
-            backfaceVisibility: 'hidden',
         }}
     >
         {children}
@@ -36,10 +31,10 @@ const ScrollStack = ({
 }) => {
     const containerRef = useRef(null)
     const cardsRef = useRef([])
-    const cardTopsRef = useRef([])   // cached original positions
+    const cardTopsRef = useRef([])
     const endTopRef = useRef(0)
-    const stackCompletedRef = useRef(false)
-    const lastTransformsRef = useRef(new Map())
+    const rafId = useRef(null)
+    const isVisible = useRef(false)
 
     const parsePercentage = useCallback((value, containerHeight) => {
         if (typeof value === 'string' && value.includes('%')) {
@@ -48,27 +43,30 @@ const ScrollStack = ({
         return parseFloat(value)
     }, [])
 
-    // Cache original card positions (called once, before transforms)
+    // Cache original card positions — uses getBoundingClientRect without resetting transforms
     const cachePositions = useCallback(() => {
         const cards = cardsRef.current
-        if (!cards.length) return
+        if (!cards.length || !containerRef.current) return
 
-        // Reset transforms before measuring
-        cards.forEach(card => {
-            card.style.transform = ''
-            card.style.filter = ''
-        })
+        // Temporarily remove transforms to get true positions
+        const savedTransforms = cards.map(c => c.style.transform)
+        cards.forEach(c => { c.style.transition = 'none'; c.style.transform = 'none' })
 
-        // Force reflow then measure
-        void containerRef.current?.offsetHeight
+        // Force reflow
+        void containerRef.current.offsetHeight
 
-        const containerTop = containerRef.current?.getBoundingClientRect().top + window.scrollY || 0
-        cardTopsRef.current = cards.map(card => {
-            return card.getBoundingClientRect().top + window.scrollY
-        })
+        cardTopsRef.current = cards.map(card =>
+            card.getBoundingClientRect().top + window.scrollY
+        )
 
-        const endEl = containerRef.current?.querySelector('.scroll-stack-end')
+        const endEl = containerRef.current.querySelector('.scroll-stack-end')
         endTopRef.current = endEl ? endEl.getBoundingClientRect().top + window.scrollY : 0
+
+        // Restore transforms immediately
+        cards.forEach((c, i) => {
+            c.style.transform = savedTransforms[i] || ''
+            c.style.transition = ''
+        })
     }, [])
 
     const updateCards = useCallback(() => {
@@ -121,20 +119,44 @@ const ScrollStack = ({
             }
 
             card.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale}) rotate(${rotation}deg)`
-            card.style.filter = blur > 0 ? `blur(${blur}px)` : 'none'
-
-            // Stack complete callback
-            if (i === cards.length - 1) {
-                const inView = scrollTop >= pinStart && scrollTop <= pinEnd
-                if (inView && !stackCompletedRef.current) {
-                    stackCompletedRef.current = true
-                    onStackComplete?.()
-                } else if (!inView && stackCompletedRef.current) {
-                    stackCompletedRef.current = false
-                }
-            }
+            card.style.filter = blur > 0 ? `blur(${blur}px)` : ''
         })
-    }, [itemScale, itemStackDistance, stackPosition, scaleEndPosition, baseScale, rotationAmount, blurAmount, onStackComplete, parsePercentage])
+    }, [itemScale, itemStackDistance, stackPosition, scaleEndPosition, baseScale, rotationAmount, blurAmount, parsePercentage])
+
+    // Only run rAF loop when the section is in/near viewport
+    useEffect(() => {
+        if (!containerRef.current) return
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    isVisible.current = entry.isIntersecting
+                    if (entry.isIntersecting && !rafId.current) {
+                        const tick = () => {
+                            if (!isVisible.current) {
+                                rafId.current = null
+                                return
+                            }
+                            updateCards()
+                            rafId.current = requestAnimationFrame(tick)
+                        }
+                        rafId.current = requestAnimationFrame(tick)
+                    }
+                })
+            },
+            { rootMargin: '200px 0px' } // start a bit before it enters viewport
+        )
+
+        observer.observe(containerRef.current)
+
+        return () => {
+            observer.disconnect()
+            if (rafId.current) {
+                cancelAnimationFrame(rafId.current)
+                rafId.current = null
+            }
+        }
+    }, [updateCards])
 
     useLayoutEffect(() => {
         const cards = Array.from(containerRef.current?.querySelectorAll('.scroll-stack-card') ?? [])
@@ -142,38 +164,31 @@ const ScrollStack = ({
 
         cards.forEach((card, i) => {
             if (i < cards.length - 1) card.style.marginBottom = `${itemDistance}px`
-            card.style.willChange = 'transform, filter'
             card.style.transformOrigin = 'top center'
         })
 
         // Cache positions once
         cachePositions()
 
-        // Recache on resize
-        const onResize = () => cachePositions()
+        // Debounced recache on resize
+        let resizeTimer
+        const onResize = () => {
+            clearTimeout(resizeTimer)
+            resizeTimer = setTimeout(cachePositions, 150)
+        }
         window.addEventListener('resize', onResize)
 
-        // rAF loop syncs with existing Lenis
-        let rafId
-        const tick = () => {
-            updateCards()
-            rafId = requestAnimationFrame(tick)
-        }
-        rafId = requestAnimationFrame(tick)
-
         return () => {
-            cancelAnimationFrame(rafId)
             window.removeEventListener('resize', onResize)
+            clearTimeout(resizeTimer)
             cardsRef.current = []
             cardTopsRef.current = []
-            lastTransformsRef.current.clear()
-            stackCompletedRef.current = false
         }
-    }, [itemDistance, cachePositions, updateCards])
+    }, [itemDistance, cachePositions])
 
     return (
         <div ref={containerRef} className={className} style={{ position: 'relative', width: '100%' }}>
-            <div style={{ paddingTop: '10vh', paddingBottom: '50rem', minHeight: '100vh' }}>
+            <div style={{ paddingTop: '10vh', paddingBottom: '30rem', minHeight: '80vh' }}>
                 {children}
                 <div className="scroll-stack-end" style={{ width: '100%', height: '1px' }} />
             </div>

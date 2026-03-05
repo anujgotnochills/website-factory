@@ -21,15 +21,15 @@
             "youtube": "https://www.youtube.com/",
             "facebook": "https://www.facebook.com/royalsalon"
         },
-        "glamour_studio": {
-            "studioName": "Glamour Studio",
-            "phone": "+91 98765 11223",
-            "whatsappNumber": "919876511223",
-            "email": "info@glamourstudio.com",
-            "address": "301, Fashion Street, Juhu, Mumbai 400049",
-            "instagram": "https://www.instagram.com/glamourstudio",
-            "youtube": "https://www.youtube.com/@glamourstudio",
-            "facebook": "https://www.facebook.com/glamourstudio"
+        "oasis_recording_studio": {
+            "studioName": "Oasis Recording Studio",
+            "phone": "+91 95511 45829",
+            "whatsappNumber": "919551145829",
+            "email": "",
+            "address": "185, Imayam Colony, Sector A, Anna Nagar West Extension, Chennai, Tamil Nadu 600101",
+            "instagram": "",
+            "youtube": "",
+            "facebook": ""
         },
         "crafters_studio": {
             "studioName": "Crafters Studio",

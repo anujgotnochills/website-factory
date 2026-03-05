@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Lenis from 'lenis'
 import './App.css'
 import { ClientConfigProvider } from './ClientConfigContext'
 
+import LoadingScreen from './components/LoadingScreen'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -15,6 +16,8 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 
 function App() {
+  const [siteReady, setSiteReady] = useState(false)
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -33,6 +36,7 @@ function App() {
 
   return (
     <ClientConfigProvider>
+      <LoadingScreen onComplete={() => setSiteReady(true)} />
       <Navbar />
       <Hero />
       <Marquee />
@@ -48,3 +52,4 @@ function App() {
 }
 
 export default App
+
