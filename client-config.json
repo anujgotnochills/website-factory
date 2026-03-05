@@ -31,15 +31,15 @@
             "youtube": "https://www.youtube.com/@glamourstudio",
             "facebook": "https://www.facebook.com/glamourstudio"
         },
-        "elite_cuts": {
-            "studioName": "Elite Cuts Unisex",
-            "phone": "+91 77889 55443",
-            "whatsappNumber": "917788955443",
-            "email": "hello@elitecuts.in",
-            "address": "5th Floor, Phoenix Mall, Lower Parel, Mumbai 400013",
-            "instagram": "https://www.instagram.com/elitecuts",
+        "crafters_studio": {
+            "studioName": "Crafters Studio",
+            "phone": "+91 8189914296",
+            "whatsappNumber": "918189914296",
+            "email": "hello@craftersstudio.in",
+            "address": "Second Floor, East Rd, CIT Nagar West, CIT Nagar, Chennai, Tamil Nadu 600035",
+            "instagram": "https://www.instagram.com/craftersstudio",
             "youtube": "https://www.youtube.com/",
-            "facebook": "https://www.facebook.com/elitecuts"
+            "facebook": "https://www.facebook.com/craftersstudio"
         }
     }
 }
