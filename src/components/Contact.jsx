@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import config from '../../client-config.json'
+import { useClientConfig } from '../ClientConfigContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -12,13 +12,6 @@ const SERVICE_OPTIONS = [
     'Product Video',
     'E-Commerce Shoot',
     'All Services',
-]
-
-const CONTACT_INFO = [
-    { icon: 'location_on', label: 'Studio Address', value: config.address },
-    { icon: 'phone', label: 'Phone', value: config.phone },
-    { icon: 'mail', label: 'Email', value: config.email },
-    { icon: 'schedule', label: 'Working Hours', value: 'Mon – Sat, 10 AM – 7 PM' },
 ]
 
 /* ── Glow Card with spotlight + particles ── */
@@ -99,6 +92,14 @@ function GlowCard({ children, style }) {
 }
 
 export default function Contact() {
+    const config = useClientConfig()
+
+    const CONTACT_INFO = [
+        { icon: 'location_on', label: 'Studio Address', value: config.address },
+        { icon: 'phone', label: 'Phone', value: config.phone },
+        { icon: 'mail', label: 'Email', value: config.email },
+        { icon: 'schedule', label: 'Working Hours', value: 'Mon – Sat, 10 AM – 7 PM' },
+    ]
     const sectionRef = useRef(null)
 
     useEffect(() => {

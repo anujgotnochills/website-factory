@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
-import config from '../../client-config.json'
+import { useClientConfig } from '../ClientConfigContext'
 
 const NAV_LINKS = [
     { label: 'Home', href: '#home' },
@@ -12,6 +12,7 @@ const NAV_LINKS = [
 ]
 
 export default function Navbar() {
+    const config = useClientConfig()
     const [scrolled, setScrolled] = useState(false)
     const [menuOpen, setMenuOpen] = useState(false)
     const navRef = useRef(null)

@@ -1,6 +1,7 @@
-import config from '../../client-config.json'
+import { useClientConfig } from '../ClientConfigContext'
 
 export default function Footer() {
+    const config = useClientConfig()
     const currentYear = new Date().getFullYear()
 
     const linkStyle = {

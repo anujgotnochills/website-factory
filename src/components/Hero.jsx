@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import config from '../../client-config.json'
+import { useClientConfig } from '../ClientConfigContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -13,6 +13,7 @@ function getFrameUrl(index) {
 }
 
 export default function Hero() {
+    const config = useClientConfig()
     const sectionRef = useRef(null)
     const canvasRef = useRef(null)
     const contentRef = useRef(null)

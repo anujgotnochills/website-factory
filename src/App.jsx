@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Lenis from 'lenis'
 import './App.css'
+import { ClientConfigProvider } from './ClientConfigContext'
 
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -31,7 +32,7 @@ function App() {
   }, [])
 
   return (
-    <>
+    <ClientConfigProvider>
       <Navbar />
       <Hero />
       <Marquee />
@@ -42,7 +43,7 @@ function App() {
       <Testimonials />
       <Contact />
       <Footer />
-    </>
+    </ClientConfigProvider>
   )
 }
 

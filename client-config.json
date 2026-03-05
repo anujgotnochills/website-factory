@@ -1,10 +1,45 @@
 {
-    "studioName": "SmartClickStudio",
-    "phone": "+91 88829 36654",
-    "whatsappNumber": "918882936654",
-    "email": "hello@smartclickstudio.com",
-    "address": "Studio 402, Creative Hub, Andheri West, Mumbai 400058",
-    "instagram": "https://www.instagram.com/smartclickstudio",
-    "youtube": "https://www.youtube.com/",
-    "facebook": "https://www.facebook.com/"
+    "default": "smartclick",
+    "clients": {
+        "smartclick": {
+            "studioName": "SmartClickStudio",
+            "phone": "+91 88829 36654",
+            "whatsappNumber": "918882936654",
+            "email": "hello@smartclickstudio.com",
+            "address": "Studio 402, Creative Hub, Andheri West, Mumbai 400058",
+            "instagram": "https://www.instagram.com/smartclickstudio",
+            "youtube": "https://www.youtube.com/",
+            "facebook": "https://www.facebook.com/"
+        },
+        "salon_royal": {
+            "studioName": "Royal Salon & Spa",
+            "phone": "+91 99001 22334",
+            "whatsappNumber": "919900122334",
+            "email": "bookings@royalsalon.in",
+            "address": "12, MG Road, Bandra West, Mumbai 400050",
+            "instagram": "https://www.instagram.com/royalsalon",
+            "youtube": "https://www.youtube.com/",
+            "facebook": "https://www.facebook.com/royalsalon"
+        },
+        "glamour_studio": {
+            "studioName": "Glamour Studio",
+            "phone": "+91 98765 11223",
+            "whatsappNumber": "919876511223",
+            "email": "info@glamourstudio.com",
+            "address": "301, Fashion Street, Juhu, Mumbai 400049",
+            "instagram": "https://www.instagram.com/glamourstudio",
+            "youtube": "https://www.youtube.com/@glamourstudio",
+            "facebook": "https://www.facebook.com/glamourstudio"
+        },
+        "elite_cuts": {
+            "studioName": "Elite Cuts Unisex",
+            "phone": "+91 77889 55443",
+            "whatsappNumber": "917788955443",
+            "email": "hello@elitecuts.in",
+            "address": "5th Floor, Phoenix Mall, Lower Parel, Mumbai 400013",
+            "instagram": "https://www.instagram.com/elitecuts",
+            "youtube": "https://www.youtube.com/",
+            "facebook": "https://www.facebook.com/elitecuts"
+        }
+    }
 }

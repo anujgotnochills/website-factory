@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import config from '../../client-config.json'
+import { useClientConfig } from '../ClientConfigContext'
 import aboutImg from '../assets/about.png'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -15,6 +15,7 @@ const STATS = [
 ]
 
 export default function About() {
+    const config = useClientConfig()
     const sectionRef = useRef(null)
 
     useEffect(() => {
