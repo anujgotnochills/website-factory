@@ -11,15 +11,15 @@
             "youtube": "https://www.youtube.com/",
             "facebook": "https://www.facebook.com/"
         },
-        "salon_royal": {
-            "studioName": "Royal Salon & Spa",
-            "phone": "+91 99001 22334",
-            "whatsappNumber": "919900122334",
-            "email": "bookings@royalsalon.in",
-            "address": "12, MG Road, Bandra West, Mumbai 400050",
-            "instagram": "https://www.instagram.com/royalsalon",
-            "youtube": "https://www.youtube.com/",
-            "facebook": "https://www.facebook.com/royalsalon"
+        "content_craft_co": {
+            "studioName": "Content Craft Co. (Podcast Studio and Studio Space)",
+            "phone": "+91 94880 05452",
+            "whatsappNumber": "919488005452",
+            "email": "",
+            "address": "First Floor, No 43, Ramaiya Colony, Gandhi Rd, Salem, Tamil Nadu 636007",
+            "instagram": "",
+            "youtube": "",
+            "facebook": ""
         },
         "oasis_recording_studio": {
             "studioName": "Oasis Recording Studio",
