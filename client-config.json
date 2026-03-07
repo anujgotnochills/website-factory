@@ -3,6 +3,8 @@
     "clients": {
         "smartclick": {
             "studioName": "SmartClickStudio",
+            "accentColor": "#c9a96e",
+            "bgColor": "#0a0a0f",
             "phone": "+91 88829 36654",
             "whatsappNumber": "918882936654",
             "email": "hello@smartclickstudio.com",
@@ -12,7 +14,9 @@
             "facebook": "https://www.facebook.com/"
         },
         "content_craft_co": {
-            "studioName": "Content Craft Co. (Podcast Studio and Studio Space)",
+            "studioName": "Content Craft Co.",
+            "accentColor": "#6eb5c9",
+            "bgColor": "#0a0f0f",
             "phone": "+91 94880 05452",
             "whatsappNumber": "919488005452",
             "email": "",
@@ -23,6 +27,8 @@
         },
         "oasis_recording_studio": {
             "studioName": "Oasis Recording Studio",
+            "accentColor": "#7ec96e",
+            "bgColor": "#0a0f0a",
             "phone": "+91 95511 45829",
             "whatsappNumber": "919551145829",
             "email": "",
@@ -33,6 +39,8 @@
         },
         "crafters_studio": {
             "studioName": "Crafters Studio",
+            "accentColor": "#c96e8a",
+            "bgColor": "#0f0a0c",
             "phone": "+91 8189914296",
             "whatsappNumber": "918189914296",
             "email": "hello@craftersstudio.in",
@@ -40,6 +48,18 @@
             "instagram": "https://www.instagram.com/craftersstudio",
             "youtube": "https://www.youtube.com/",
             "facebook": "https://www.facebook.com/craftersstudio"
+        },
+        "elstudios": {
+            "studioName": "elstudios",
+            "accentColor": "#c9a96e",
+            "bgColor": "#0a0a0f",
+            "phone": "+91 93440 03546",
+            "whatsappNumber": "919344003546",
+            "email": "",
+            "address": "5, 5A, Valluvar Salai, MGR Garden, Ramapuram, Chennai, Tamil Nadu 600089",
+            "instagram": "",
+            "youtube": "",
+            "facebook": ""
         }
     }
 }
