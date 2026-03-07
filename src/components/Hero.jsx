@@ -106,12 +106,18 @@ function ApertureReveal() {
             }
         )
 
-        // Fade the whole aperture container
+        // Fade the whole aperture container + disable click blocking
         gsap.to(apertureRef.current, {
             opacity: 0,
             duration: 0.6,
             delay: 1.6,
             ease: 'power2.out',
+            onComplete: () => {
+                if (apertureRef.current) {
+                    apertureRef.current.style.pointerEvents = 'none'
+                    apertureRef.current.style.display = 'none'
+                }
+            },
         })
     }, [])
 
@@ -395,6 +401,7 @@ export default function Hero() {
                     textAlign: 'center',
                     width: '100%',
                     opacity: 0,
+                    paddingTop: isMobile ? '80px' : '0',
                 }}>
                     <div className="hero-content" style={{ maxWidth: '800px' }}>
                         <div ref={headingRef}>

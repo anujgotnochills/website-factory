@@ -15,14 +15,20 @@ export default function Navbar() {
     const config = useClientConfig()
     const [scrolled, setScrolled] = useState(false)
     const [menuOpen, setMenuOpen] = useState(false)
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
     const navRef = useRef(null)
     const overlayRef = useRef(null)
     const menuLinksRef = useRef([])
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 2)
+        const onResize = () => setIsMobile(window.innerWidth <= 768)
         window.addEventListener('scroll', onScroll)
-        return () => window.removeEventListener('scroll', onScroll)
+        window.addEventListener('resize', onResize)
+        return () => {
+            window.removeEventListener('scroll', onScroll)
+            window.removeEventListener('resize', onResize)
+        }
     }, [])
 
     useEffect(() => {
@@ -68,8 +74,10 @@ export default function Navbar() {
                     right: 0,
                     zIndex: 1000,
                     padding: scrolled ? '16px 0' : '24px 0',
-                    background: scrolled ? 'rgba(10, 10, 15, 0.92)' : 'transparent',
-                    backdropFilter: scrolled ? 'blur(20px)' : 'none',
+                    background: scrolled
+                        ? 'rgba(10, 10, 15, 0.95)'
+                        : (isMobile ? 'rgba(10, 10, 15, 0.7)' : 'transparent'),
+                    backdropFilter: scrolled || isMobile ? 'blur(20px)' : 'none',
                     borderBottom: scrolled ? '1px solid rgba(201, 169, 110, 0.1)' : 'none',
                     transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                 }}
