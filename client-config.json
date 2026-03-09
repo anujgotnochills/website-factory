@@ -84,6 +84,18 @@
             "instagram": "",
             "youtube": "",
             "facebook": ""
+        },
+        "zark_studio": {
+            "studioName": "Zark Studio",
+            "accentColor": "#00000",
+            "bgColor": "#FFFFFF",
+            "phone": "+91-7208120841",
+            "whatsappNumber": "+91-7208120841",
+            "email": "",
+            "address": "a-507 lotus apartment, sector 19 A, nerul, navi mumbai",
+            "instagram": "",
+            "youtube": "",
+            "facebook": ""
         }
     }
 }
