@@ -107,6 +107,20 @@
             "youtube": "",
             "facebook": "",
             "website": ""
+        },
+        "new_mrudang_studio": {
+            "studioName": "New Mrudang Studio",
+            "category": "Recording Studio / Podcast Studio",
+            "rating": 4.2,
+            "reviewsCount": 54,
+            "phone": "+91 92659 14273",
+            "whatsappNumber": "919265914273",
+            "email": "",
+            "website": "",
+            "address": "2nd Floor, Sarovar Complex, B/h Samudra Annexure, Off Chimanlal Girdharlal Rd, near Jain Temple, Navrangpura, Ahmedabad, Gujarat 380006",
+            "city": "Ahmedabad",
+            "state": "Gujarat",
+            "country": "India"
         }
     }
 }
