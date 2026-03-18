@@ -150,6 +150,20 @@
             "state": "Delhi",
             "country": "India",
             "openHours": "Open 24 hours"
+        },
+        "lets_talk_studio": {
+            "studioName": "Lets Talk Studio - Video and Podcast Shoot",
+            "category": "Podcast Studio / Photography Studio",
+            "rating": 5.0,
+            "reviewsCount": 1,
+            "phone": "+91 83769 03782",
+            "whatsappNumber": "918376903782",
+            "email": "",
+            "website": "",
+            "address": "104, Part 1, Kotla Vihar Phase 2, Tilangpur Kotla, Delhi, 110043",
+            "city": "Delhi",
+            "state": "Delhi",
+            "country": "India"
         }
     }
 }
