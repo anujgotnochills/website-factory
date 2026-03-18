@@ -121,6 +121,20 @@
             "city": "Ahmedabad",
             "state": "Gujarat",
             "country": "India"
+        },
+        "rahul_mineset": {
+            "studioName": "Rahul Mineset",
+            "category": "Recording Studio / Podcast Studio",
+            "rating": 4.2,
+            "reviewsCount": 54,
+            "phone": "+91 8527111648",
+            "whatsappNumber": "918527111648",
+            "email": "",
+            "website": "",
+            "address": "",
+            "city": "",
+            "state": "",
+            "country": "India"
         }
     }
 }
