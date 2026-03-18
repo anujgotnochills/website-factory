@@ -135,6 +135,21 @@
             "city": "",
             "state": "",
             "country": "India"
+        },
+        "gg_podcast_studio": {
+            "studioName": "GG Podcast Studio",
+            "category": "Podcast Studio / Recording Studio",
+            "rating": 4.3,
+            "reviewsCount": 6,
+            "phone": "+91 92894 06999",
+            "whatsappNumber": "919289406999",
+            "email": "",
+            "website": "https://youtube.com",
+            "address": "14, Plot No. 201, Sainik Nagar, Vipin Garden, Kakrola, Delhi, 110059",
+            "city": "Delhi",
+            "state": "Delhi",
+            "country": "India",
+            "openHours": "Open 24 hours"
         }
     }
 }
