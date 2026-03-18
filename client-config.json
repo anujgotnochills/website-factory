@@ -164,6 +164,21 @@
             "city": "Delhi",
             "state": "Delhi",
             "country": "India"
+        },
+        "endurance_image_studio": {
+            "studioName": "Endurance Image - End to End Podcast Production Studio",
+            "category": "Podcast Studio / Recording Studio",
+            "rating": 5.0,
+            "reviewsCount": 2,
+            "phone": "+91 95821 56943",
+            "whatsappNumber": "919582156943",
+            "email": "",
+            "website": "https://instagram.com",
+            "address": "2nd Floor, A-74, A Block, Sector 65, Noida, Uttar Pradesh 201301",
+            "city": "Noida",
+            "state": "Uttar Pradesh",
+            "country": "India",
+            "openHours": "Open · Closes 7 pm"
         }
     }
 }
