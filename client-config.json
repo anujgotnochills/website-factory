@@ -179,6 +179,20 @@
             "state": "Uttar Pradesh",
             "country": "India",
             "openHours": "Open · Closes 7 pm"
+        },
+        "seven_frames_studio": {
+            "studioName": "7 Frames Studio | Best Video Shooting & Podcast Shoot Studio",
+            "category": "Podcast Studio / Recording Studio",
+            "rating": 5.0,
+            "reviewsCount": 5,
+            "phone": "+91 91422 96861",
+            "whatsappNumber": "919142296861",
+            "website": "https://instagram.com",
+            "address": "House No. 109, Chaura Raghunathpur, Sector 22, Noida, Uttar Pradesh 201307",
+            "city": "Noida",
+            "state": "Uttar Pradesh",
+            "country": "India",
+            "openHours": "Open 24 hours"
         }
     }
 }
