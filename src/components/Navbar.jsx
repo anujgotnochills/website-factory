@@ -13,23 +13,43 @@ const NAV_LINKS = [
 
 export default function Navbar() {
     const config = useClientConfig()
+    const [isVisible, setIsVisible] = useState(true)
     const [scrolled, setScrolled] = useState(false)
     const [menuOpen, setMenuOpen] = useState(false)
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
     const navRef = useRef(null)
     const overlayRef = useRef(null)
     const menuLinksRef = useRef([])
+    const lastScrollY = useRef(0)
 
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 2)
+        const onScroll = () => {
+            const currentScrollY = window.scrollY
+            
+            // Background blur logic
+            setScrolled(currentScrollY > window.innerHeight * 0.5)
+
+            // Hide/Show logic based on direction
+            if (currentScrollY > lastScrollY.current && currentScrollY > 50 && !menuOpen) {
+                // Scrolling down -> Hide
+                setIsVisible(false)
+            } else {
+                // Scrolling up -> Show
+                setIsVisible(true)
+            }
+            
+            lastScrollY.current = currentScrollY
+        }
+        
         const onResize = () => setIsMobile(window.innerWidth <= 768)
-        window.addEventListener('scroll', onScroll)
+        
+        window.addEventListener('scroll', onScroll, { passive: true })
         window.addEventListener('resize', onResize)
         return () => {
             window.removeEventListener('scroll', onScroll)
             window.removeEventListener('resize', onResize)
         }
-    }, [])
+    }, [menuOpen])
 
     useEffect(() => {
         if (menuOpen) {
@@ -79,7 +99,8 @@ export default function Navbar() {
                         : (isMobile ? 'rgba(10, 10, 15, 0.7)' : 'transparent'),
                     backdropFilter: scrolled || isMobile ? 'blur(20px)' : 'none',
                     borderBottom: scrolled ? '1px solid rgba(201, 169, 110, 0.1)' : 'none',
-                    transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                    transform: isVisible ? 'translateY(0)' : 'translateY(-100%)',
+                    transition: 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), padding 0.4s ease, background 0.4s ease',
                 }}
             >
                 <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
