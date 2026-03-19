@@ -445,7 +445,7 @@ export default function Hero() {
                         </p>
                         <div ref={ctaRef} className="hero-cta" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
                             <a
-                                href={`https://wa.me/${config.whatsappNumber}?text=Hi%20${encodeURIComponent(config.studioName)},%20I%20would%20like%20to%20book%20a%20shoot!`}
+                                href={`https://wa.me/${config.whatsappNumber}?text=${encodeURIComponent(`Hi ${config.studioName}, I would like to book a shoot!`)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn-primary"
