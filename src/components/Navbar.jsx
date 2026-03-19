@@ -30,11 +30,18 @@ export default function Navbar() {
             setScrolled(currentScrollY > window.innerHeight * 0.5)
 
             // Hide/Show logic based on direction
-            if (currentScrollY > lastScrollY.current && currentScrollY > 50 && !menuOpen) {
-                // Scrolling down -> Hide
-                setIsVisible(false)
-            } else {
-                // Scrolling up -> Show
+            if (!menuOpen) {
+                if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+                    // Scrolling down -> Hide
+                    setIsVisible(false)
+                } else if (currentScrollY < lastScrollY.current) {
+                    // Scrolling up -> Show
+                    setIsVisible(true)
+                }
+            }
+            
+            // Always show at the very top
+            if (currentScrollY <= 50) {
                 setIsVisible(true)
             }
             
@@ -99,7 +106,7 @@ export default function Navbar() {
                         : (isMobile ? 'rgba(10, 10, 15, 0.7)' : 'transparent'),
                     backdropFilter: scrolled || isMobile ? 'blur(20px)' : 'none',
                     borderBottom: scrolled ? '1px solid rgba(201, 169, 110, 0.1)' : 'none',
-                    transform: isVisible ? 'translateY(0)' : 'translateY(-100%)',
+                    transform: isVisible || menuOpen ? 'translateY(0)' : 'translateY(-100%)',
                     transition: 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), padding 0.4s ease, background 0.4s ease',
                 }}
             >
