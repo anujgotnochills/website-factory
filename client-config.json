@@ -191,6 +191,16 @@
             "state": "Uttar Pradesh",
             "country": "India",
             "openHours": "Open 24 hours"
+        },
+        "possible_studio_podcast": {
+            "studioName": "Possible Studio - Podcast",
+            "phone": "+91 89396 58409",
+            "whatsappNumber": "918939658409",
+            "email": "info@possiblestudio.com",
+            "address": "74B, Race Course Rd, Gopalapuram, Coimbatore, Tamil Nadu 641018",
+            "instagram": "",
+            "youtube": "",
+            "facebook": ""
         }
     }
 }
