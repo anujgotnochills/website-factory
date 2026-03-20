@@ -211,6 +211,16 @@
             "instagram": "https://instagram.com",
             "youtube": "",
             "facebook": ""
+        },
+        "anvit_production": {
+            "studioName": "Anvit Production pvt ltd",
+            "phone": "+91 9971817165",
+            "whatsappNumber": "919971817165",
+            "email": "",
+            "address": "section 13, noida, uttar pradesh",
+            "instagram": "https://instagram.com",
+            "youtube": "",
+            "facebook": ""
         }
     }
 }
