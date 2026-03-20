@@ -221,6 +221,16 @@
             "instagram": "https://instagram.com",
             "youtube": "",
             "facebook": ""
+        },
+        "micx_studio": {
+            "studioName": "MicX Studio",
+            "phone": "",
+            "whatsappNumber": "",
+            "email": "info@micxstudio.com",
+            "address": "First Floor, Plot no 248, Shakti Khand III, Indirapuram, Ghaziabad, Uttar Pradesh 201014",
+            "instagram": "",
+            "youtube": "",
+            "facebook": ""
         }
     }
 }
