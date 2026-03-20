@@ -231,6 +231,26 @@
             "instagram": "https://www.instagram.com/micxstudiopodcast",
             "youtube": "",
             "facebook": ""
+        },
+        "nairobi_podcast_studio": {
+            "studioName": "Nairobi Podcast Studio",
+            "phone": "",
+            "whatsappNumber": "",
+            "email": "",
+            "address": "Syokimau, Nairobi, Kenya",
+            "instagram": "https://www.instagram.com/nairobipodcast_studio",
+            "youtube": "",
+            "facebook": ""
+        },
+        "studio_a_podcast": {
+            "studioName": "Studio A Podcast",
+            "phone": "+994 99 813 16 76",
+            "whatsappNumber": "994998131676",
+            "email": "",
+            "address": "",
+            "instagram": "https://www.instagram.com/studio_a_podcast",
+            "youtube": "",
+            "facebook": ""
         }
     }
 }
