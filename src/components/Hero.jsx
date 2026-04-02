@@ -5,10 +5,15 @@ import { useClientConfig } from '../ClientConfigContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const FRAME_COUNT = 100
+const FRAME_COUNT_DESKTOP = 120 // Desktop has 120 frames in public/animation
+const FRAME_COUNT_MOBILE = 100  // Mobile has 100 frames in src/assets/animation mobile
 
-function getFrameUrl(index) {
+function getFrameUrl(index, isMobile) {
     const num = String(index).padStart(3, '0')
+    if (isMobile) {
+        // Use Vite-native way to get assets from src/assets
+        return new URL(`../assets/animation mobile/ezgif-frame-${num}.jpg`, import.meta.url).href
+    }
     return `/animation/ezgif-frame-${num}.jpg`
 }
 
@@ -181,7 +186,7 @@ function ApertureReveal() {
     )
 }
 
-/* ─── Animated Gradient Background (mobile) ─── */
+/* ─── Animated Gradient Background (fallback/mobile background) ─── */
 function StudioGradient() {
     return (
         <div style={{
@@ -219,40 +224,45 @@ export default function Hero() {
         return () => window.removeEventListener('resize', check)
     }, [])
 
-    // Preload frames (desktop only)
+    // Preload frames
     useEffect(() => {
-        if (isMobile) return
         const images = []
         let loadedCount = 0
+        const frameCount = isMobile ? FRAME_COUNT_MOBILE : FRAME_COUNT_DESKTOP
 
-        for (let i = 1; i <= FRAME_COUNT; i++) {
+        for (let i = 1; i <= frameCount; i++) {
             const img = new Image()
-            img.src = getFrameUrl(i)
+            img.src = getFrameUrl(i, isMobile)
             img.onload = () => {
                 loadedCount++
-                if (loadedCount === FRAME_COUNT) setLoaded(true)
+                if (loadedCount === frameCount) setLoaded(true)
             }
             images.push(img)
         }
         imagesRef.current = images
+        
+        // Reset loaded state if switching to force re-preload
+        setLoaded(false)
     }, [isMobile])
 
-    // Canvas rendering + scroll-based animation (desktop only)
+    // Canvas rendering + scroll-based animation
     useEffect(() => {
-        if (isMobile || !loaded || !canvasRef.current) return
+        if (!loaded || !canvasRef.current) return
 
         const canvas = canvasRef.current
         const ctx = canvas.getContext('2d')
         const images = imagesRef.current
+        const frameCount = isMobile ? FRAME_COUNT_MOBILE : FRAME_COUNT_DESKTOP
 
         function drawFrame(index) {
-            const img = images[Math.min(Math.max(index, 0), FRAME_COUNT - 1)]
+            const img = images[Math.min(Math.max(index, 0), frameCount - 1)]
             if (!img || !ctx) return
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
             const canvasRatio = canvas.width / canvas.height
             const imgRatio = img.width / img.height
             let drawW, drawH, drawX, drawY
+            
             if (canvasRatio > imgRatio) {
                 drawW = canvas.width
                 drawH = canvas.width / imgRatio
@@ -281,14 +291,14 @@ export default function Hero() {
 
         const animObj = { frame: 0 }
         gsap.to(animObj, {
-            frame: FRAME_COUNT - 1,
+            frame: frameCount - 1,
             snap: 'frame',
             ease: 'none',
             scrollTrigger: {
                 trigger: sectionRef.current,
                 start: 'top top',
                 end: 'bottom bottom',
-                scrub: 0.5,
+                scrub: 0.3, // Smoother and quicker
             },
             onUpdate: () => drawFrame(Math.round(animObj.frame)),
         })
@@ -306,7 +316,7 @@ export default function Hero() {
         if (!contentRef.current) return
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({
-                delay: isMobile ? 1.2 : 0.3, // longer delay on mobile for aperture reveal
+                delay: isMobile ? 1.0 : 0.3, // slight delay for aperture reveal
                 defaults: { ease: 'power3.out' },
             })
             tl.to(contentRef.current, { opacity: 1, duration: 0.8 })
@@ -315,7 +325,7 @@ export default function Hero() {
                 .fromTo(ctaRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, '-=0.3')
                 .fromTo(scrollRef.current, { opacity: 0 }, { opacity: 1, duration: 0.6 }, '-=0.1')
 
-            gsap.to(scrollRef.current, { y: 8, repeat: -1, yoyo: true, duration: 1.5, ease: 'sine.inOut', delay: isMobile ? 3 : 1.5 })
+            gsap.to(scrollRef.current, { y: 8, repeat: -1, yoyo: true, duration: 1.5, ease: 'sine.inOut', delay: isMobile ? 2.5 : 1.5 })
         }, sectionRef)
         return () => ctx.revert()
     }, [isMobile])
@@ -323,11 +333,11 @@ export default function Hero() {
     return (
         <section id="home" ref={sectionRef} style={{
             position: 'relative',
-            height: isMobile ? '100vh' : '300vh',
+            height: '300vh', // Always 300vh to allow scrolling animation
         }}>
             {/* Sticky viewport */}
             <div style={{
-                position: isMobile ? 'relative' : 'sticky',
+                position: 'sticky',
                 top: 0,
                 height: '100vh',
                 width: '100%',
@@ -335,7 +345,7 @@ export default function Hero() {
                 display: 'flex',
                 alignItems: 'center',
             }}>
-                {/* === MOBILE: Aperture + Bokeh + Gradient === */}
+                {/* Mobile indicators / backup */}
                 {isMobile && (
                     <>
                         <StudioGradient />
@@ -344,19 +354,19 @@ export default function Hero() {
                     </>
                 )}
 
-                {/* === DESKTOP: Canvas Background === */}
-                {!isMobile && (
-                    <canvas
-                        ref={canvasRef}
-                        style={{
-                            position: 'absolute',
-                            inset: 0,
-                            width: '100%',
-                            height: '100%',
-                            zIndex: 0,
-                        }}
-                    />
-                )}
+                {/* Canvas Background (Now for both) */}
+                <canvas
+                    ref={canvasRef}
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        zIndex: 0,
+                        opacity: loaded ? 1 : 0,
+                        transition: 'opacity 0.6s ease',
+                    }}
+                />
 
                 {/* Dark overlay */}
                 <div style={{
